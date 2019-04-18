@@ -1,0 +1,20 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control' }}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.content) }}
+        {{ form_widget(form.content, {'attr': {'class': 'form-control' }}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.publishedAt) }}
+        {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control' }}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.enabled) }}
+        {{ form_widget(form.enabled, {'attr': {'class': 'form-control' }}) }}
+    </div>
+
+    <button class="btn">{{ button_label|default('Zapisz') }}</button>
+{{ form_end(form) }}
