@@ -1,20 +1,39 @@
-{{ form_start(form) }}
-    <div class="form-group">
-        {{ form_label(form.title) }}
-        {{ form_widget(form.title, {'attr': {'class': 'form-control' }}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.content) }}
-        {{ form_widget(form.content, {'attr': {'class': 'form-control' }}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.publishedAt) }}
-        {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control' }}) }}
-    </div>
-    <div class="form-group">
-        {{ form_label(form.enabled) }}
-        {{ form_widget(form.enabled, {'attr': {'class': 'form-control' }}) }}
-    </div>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {{ form_start(form) }}
+        <div class="modal-body">
 
-    <button class="btn">{{ button_label|default('Zapisz') }}</button>
-{{ form_end(form) }}
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control' }}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.publishedAt) }}
+                {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control' }}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.enabled) }}
+                {{ form_widget(form.enabled, {'attr': {'class': 'form-control' }}) }}
+            </div>
+
+            <button class="btn">{{ button_label|default('Zapisz') }}</button>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="fast-edit-save btn btn-primary">Zapisz</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+
+

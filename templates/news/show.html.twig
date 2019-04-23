@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>News</h1>
-
+    <a class="btn btn-lg btn-info "href="{{ path('news_index') }}">Powrót do listy</a>
     <table class="table">
         <tbody>
             <tr>
@@ -12,39 +12,38 @@
                 <td>{{ news.id }}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th>Tytuł</th>
                 <td>{{ news.title }}</td>
             </tr>
             <tr>
-                <th>Content</th>
+                <th>Treść</th>
                 <td>{{ news.content }}</td>
             </tr>
+
             <tr>
-                <th>PublishAt</th>
-                <td>{{ news.publishAt ? news.publishAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Utworzono</th>
+                <td>{{ news.createdAt ? news.createdAt|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
-                <td>{{ news.createdAt ? news.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Ostatnia aktualizacja</th>
+                <td>{{ news.updatedAt ? news.updatedAt|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
-                <td>{{ news.updatedAt ? news.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Opublikowano</th>
+                <td>{{ news.PublishedAt ? news.PublishedAt|date('Y-m-d') : '' }}</td>
+            </tr>
+
+            <tr>
+                <th>Aktywny</th>
+                <td>{{ news.enabled ? 'Tak' : 'Nie' }}</td>
             </tr>
             <tr>
-                <th>Enabled</th>
-                <td>{{ news.enabled ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ news.image }}</td>
+                <th>Zdjęcie</th>
+                <td><img class="img-thumbnail" src="{{ asset('uploads/images/' ~ news.image) }}"/> </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('news_index') }}">back to list</a>
+    <a class="btn btn-lg btn-success" href="{{ path('news_edit', {'id': news.id}) }}">Edytuj</a>
 
-    <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
-
-    {{ include('news/_delete_form.html.twig') }}
 {% endblock %}

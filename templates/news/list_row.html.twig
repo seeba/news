@@ -1,0 +1,13 @@
+<td>{{ news.id }}</td>
+<td>{{ news.title }}</td>
+<td>{{ news.createdAt ? news.createdAt|date('Y-m-d') : '' }}</td>
+<td>{{ news.updatedAt ? news.updatedAt|date('Y-m-d') : '' }}</td>
+<td>{{ news.publishedAt ? news.publishedAt|date('Y-m-d') : '' }}</td>
+<td>{{ news.enabled ? 'Tak' : 'Nie' }}</td>
+<td><div class="media"><img class="img-thumbnail" src="{{ asset('uploads/images/' ~ news.image) }}"/> </div></td>
+<td>
+    <a class="btn btn-sm btn-info btn-block"  href="{{ path('news_show', {'id': news.id}) }}">Pokaż</a>
+    <a class="btn btn-sm btn-warning btn-block" href="{{ path('news_edit', {'id': news.id}) }}">Edytuj</a>
+    <button class="fast_edit btn btn-sm btn-success btn-block" data-id="{{ news.id }}">Szybka edycja</button>
+    <button class="fast_delete btn btn-sm btn-danger btn-block" data-id="{{ news.id }}">Usuń</button>
+</td>

@@ -6,9 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NewsRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class News
 {
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -26,12 +28,7 @@ class News
      */
     private $content;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $publishAt;
-
-    /**
+     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -47,11 +44,34 @@ class News
     private $enabled;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
      * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $publishedAt;
+
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+        if ($this->getUpdatedAt() == null){
+            $this->setUpdatedAt(new \DateTime());
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function updateUpdatedAtDateTime()
+    {
+        $this->setUpdatedAt(new \DateTime());
+    }
 
     public function getId(): ?int
     {
@@ -82,17 +102,6 @@ class News
         return $this;
     }
 
-    public function getPublishAt(): ?\DateTimeInterface
-    {
-        return $this->publishAt;
-    }
-
-    public function setPublishAt(\DateTimeInterface $publishAt): self
-    {
-        $this->publishAt = $publishAt;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -141,4 +150,18 @@ class News
 
         return $this;
     }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+
 }

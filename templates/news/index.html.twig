@@ -1,47 +1,125 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}News index{% endblock %}
+{% block title %}Lista artykułów{% endblock %}
 
 {% block body %}
-    <h1>News index</h1>
+    <h1>Lista artykułów</h1>
 
-    <table class="table">
-        <thead>
+    <table class="table table-hover table-dark ">
+        <thead class="thead-dark">
             <tr>
                 <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>PublishAt</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
+                <th>Tytuł</th>
+                <th>Utworzono</th>
+                <th>Zaktualizowano</th>
+                <th>Opublikowano</th>
                 <th>Enabled</th>
-                <th>Image</th>
-                <th>actions</th>
+                <th>Zdjęcie</th>
+                <th>Akcje</th>
             </tr>
         </thead>
         <tbody>
         {% for news in news %}
-            <tr>
-                <td>{{ news.id }}</td>
-                <td>{{ news.title }}</td>
-                <td>{{ news.content }}</td>
-                <td>{{ news.publishAt ? news.publishAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ news.createdAt ? news.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ news.updatedAt ? news.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ news.enabled ? 'Yes' : 'No' }}</td>
-                <td>{{ news.image }}</td>
-                <td>
-                    <a href="{{ path('news_show', {'id': news.id}) }}">show</a>
-                    <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a>
-                </td>
+            <tr data-id = "{{ news.id }}">
+                {{ include('news/list_row.html.twig') }}
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">Nie znaleziono artykułów</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('news_new') }}">Create new</a>
+    <a class="btn btn-info" href="{{ path('news_new') }}">Utwórz nowy</a>
+
+    <div class="modal fade" id="fastEditModal" tabindex="-1" role="dialog" aria-labelledby="fastEditModalLabel" aria-hidden="true">
+
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Usuwanie artykułu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Czy usunąć artykuł?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                    <button type="button" class="delete-fast-btn btn btn-primary btn-danger">Usuń</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+var id = '';
+var closestTr = '';
+var url = '';
+        $(document).on('click', '.fast_edit', function (e) {
+            id = $(this).attr('data-id');
+            closestTr = $(this).closest('tr');
+            url = id+'/fast-edit';
+
+            $.get(url, function (data) {
+                $('#fastEditModal').html(data);
+                $('#fastEditModal').modal('show');
+                $('#news_publishedAt').datepicker({
+                    'format' : "yyyy-mm-dd"
+                });
+            })
+
+        });
+        $(document).on('click', '.fast_delete', function (e) {
+
+            id = $(this).attr('data-id');
+            closestTr = $(this).closest('tr');
+            url = id+'/fast-delete';
+            $('.delete-fast-btn').attr('data-id', id);
+            $('#deleteModal').modal('show');
+
+        })
+
+        $('.delete-fast-btn').on('click', function () {
+
+            $.post(url, {id : id})
+                .done(function (data) {
+                    console.log(data);
+                    closestTr.hide();
+                    $('#deleteModal').modal('hide');
+
+                })
+
+        })
+
+
+            $(document).on('click', '.fast-edit-save', function (e) {
+
+                var formData = $('#fastEditModal form').serializeArray();
+                var url = id+'/update'
+
+                $.post(url, formData)
+                    .done(function (data) {
+
+                        $('#fastEditModal').modal('hide');
+                        closestTr.html(data);
+
+                    })
+                    .fail(function (data) {
+
+                    })
+
+            })
+
+    </script>
 {% endblock %}
