@@ -11,17 +11,27 @@
     </div>
     <div class="form-group">
         {{ form_label(form.publishedAt) }}
-        {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control'}}) }}
+
+        {% if form.publishedAt.vars.value is empty %}
+
+            {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control', 'value' : '2019-04-19' }}) }}
+        {% else %}
+            {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control' }}) }}
+        {% endif %}
+
+        {{ form_errors(form.publishedAt) }}
     </div>
     <div class="form-group">
         {{ form_label(form.enabled) }}
         {{ form_widget(form.enabled, {'attr': {'class': 'form-control'}}) }}
     </div>
+
+{% if form.image is defined %}
 <div class="form-group">
         {{ form_label(form.image) }}
         {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
         {{ form_errors(form.image) }}
 </div>
-
+{% endif %}
     <button class="btn btn-success btn-lg">{{ button_label|default('Zapisz') }}</button>
 {{ form_end(form) }}

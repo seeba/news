@@ -35,7 +35,7 @@ class NewsController extends AbstractController
     public function new(Request $request, FileUploader $fileUploader): Response
     {
         $news = new News();
-        $form = $this->createForm(NewsType::class, $news);
+        $form = $this->createForm(NewsType::class, $news, ['edit_type' => 'new'] );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
