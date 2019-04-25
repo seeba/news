@@ -20,11 +20,13 @@ class News
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="To pole nie może być puste")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="To pole nie może byc puste")
      */
     private $content;
 
@@ -45,13 +47,14 @@ class News
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
-     * @Assert\File(mimeTypes={ "image/jpeg" })
+     * @Assert\NotBlank(message="Proszę załaduj zdjęcie.")
+     * @Assert\File(mimeTypes={ "image/*"}, mimeTypesMessage="Plik musi być obrazem")
      */
     private $image;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Proszę podaj datę publikacji")
      */
     private $publishedAt;
 

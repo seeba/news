@@ -7,6 +7,7 @@ use App\Form\NewsType;
 use App\Repository\NewsRepository;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -140,7 +141,16 @@ class NewsController extends AbstractController
                     }
 
                   $news->setPublishedAt(\DateTime::createFromFormat('Y-m-d',$param['publishedAt']));
+                    if (strlen($param['title']) < 3) {
 
+                        $form = $this->createForm(NewsType::class, $news, ['edit_type' => 'fast'] );
+                        $form->get('title')->addError(new FormError('Tytuł nie moze byc pusty'));
+                        return $this->render('news/_formFast.html.twig', [
+                            'news' => $news,
+                            'form' => $form->createView(),
+                        ]);
+
+                    }
                     $news->setTitle($param['title']);
                     $this->getDoctrine()->getManager()->persist($news);
                     $this->getDoctrine()->getManager()->flush();

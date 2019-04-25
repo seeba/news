@@ -105,14 +105,19 @@ var url = '';
 
             $(document).on('click', '.fast-edit-save', function (e) {
 
+
                 var formData = $('#fastEditModal form').serializeArray();
                 var url = id+'/update'
-
+                console.log(formData);
                 $.post(url, formData)
                     .done(function (data) {
 
-                        $('#fastEditModal').modal('hide');
-                        closestTr.html(data);
+                        if ($("#news_title").val().length < 1){
+                            $('#fastEditModal').html(data);
+                        } else {
+                            $('#fastEditModal').modal('hide');
+                            closestTr.html(data);
+                        }
 
                     })
                     .fail(function (data) {

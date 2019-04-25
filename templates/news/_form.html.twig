@@ -1,23 +1,26 @@
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate' }}) }}
     <div class="form-group">
         {{ form_label(form.title) }}
-        {{ form_widget(form.title, {'attr': {'class': 'form-control' }}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.title) }}
     </div>
     <div class="form-group">
         {{ form_label(form.content) }}
-        {{ form_widget(form.content, {'attr': {'class': 'form-control' }}) }}
+        {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.content) }}
     </div>
     <div class="form-group">
         {{ form_label(form.publishedAt) }}
-        {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control' }}) }}
+        {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control'}}) }}
     </div>
     <div class="form-group">
         {{ form_label(form.enabled) }}
-        {{ form_widget(form.enabled, {'attr': {'class': 'form-control' }}) }}
+        {{ form_widget(form.enabled, {'attr': {'class': 'form-control'}}) }}
     </div>
 <div class="form-group">
         {{ form_label(form.image) }}
-        {{ form_widget(form.image, {'attr': {'class': 'form-control' }}) }}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.image) }}
 </div>
 
     <button class="btn btn-success btn-lg">{{ button_label|default('Zapisz') }}</button>

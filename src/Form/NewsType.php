@@ -17,16 +17,31 @@ class NewsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, ['label' => 'Tytuł'])
-            ->add('enabled', CheckboxType::class, ['label' => 'Aktywny'])
+            ->add('title', TextType::class, [
+                'label' => 'Tytuł',
+                'required' => true
+
+            ])
+            ->add('enabled', CheckboxType::class, [
+                'label' => 'Aktywny',
+                'required' => true
+            ])
             ->add('publishedAt', DateType::class,
                 ['label' => 'Data publikacji',
                  'widget' => 'single_text',
-                 'html5' => false
+                 'html5' => false,
+                 'required' => true
                 ]);
         if ($options['edit_type'] == 'normal' ) {
-            $builder->add('content', TextareaType::class, ['label' => 'Treść'])
-                    ->add('image', FileType::class, ['data_class' => null, 'label' => 'Wybierz zdjęcie'])
+            $builder->add('content', TextareaType::class,
+                [
+                    'label' => 'Treść',
+                    'required' => true
+                    ])
+                    ->add('image', FileType::class, [
+                        'data_class' => null,
+                        'label' => 'Wybierz zdjęcie',
+                        'required' => true])
             ;
         }
 

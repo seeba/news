@@ -6,21 +6,22 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        {{ form_start(form) }}
+        {{ form_start(form, {'attr': {'id': "fast-form"}}) }}
         <div class="modal-body">
 
             <div class="form-group">
                 {{ form_label(form.title) }}
-                {{ form_widget(form.title, {'attr': {'class': 'form-control' }}) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.title) }}
             </div>
 
             <div class="form-group">
                 {{ form_label(form.publishedAt) }}
-                {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control' }}) }}
+                {{ form_widget(form.publishedAt, {'attr': {'class': 'form-control', 'novalidate': 'novalidate' }}) }}
             </div>
             <div class="form-group">
                 {{ form_label(form.enabled) }}
-                {{ form_widget(form.enabled, {'attr': {'class': 'form-control' }}) }}
+                {{ form_widget(form.enabled, {'attr': {'class': 'form-control', 'novalidate': 'novalidate' }}) }}
             </div>
 
             <button class="btn">{{ button_label|default('Zapisz') }}</button>
